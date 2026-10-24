@@ -1,0 +1,4 @@
+const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
+const root=__dirname, port=Number(process.env.PORT)||3000;
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.txt':'text/plain; charset=utf-8'};
+http.createServer((req,res)=>{let file;try{file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));}catch{res.writeHead(400).end();return}if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403).end();return}if(file===root)file=path.join(root,'index.html');fs.readFile(file,(err,data)=>{if(err){res.writeHead(404).end('Introuvable');return}res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','X-Content-Type-Options':'nosniff','Cache-Control':'no-store'});res.end(data)});}).listen(port,'0.0.0.0',()=>console.log(`CV disponible : http://localhost:${port}`));

@@ -1,0 +1,9 @@
+{
+  "name": "orbital-cv",
+  "version": "1.14.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node server.cjs"
+  }
+}
